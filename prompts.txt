@@ -17,7 +17,7 @@ CHANGELOG.md
 prompts.txt
 
 No escribas código Java todavía, solo la estructura."
-Modificaciones manuales: Se pudo revisar manualmente que `README.md` existente no se sobrescribiera y confirmar visualmente la estructura creada.
+Modificaciones manuales: Se pudo revisar manualmente que `README.md` existente no se sobrescribiera y confirme visualmente la estructura creada.
 
 PROMPT #2
 Usado para: Generar la entidad `Producto`.
