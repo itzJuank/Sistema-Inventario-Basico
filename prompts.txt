@@ -1,0 +1,169 @@
+PROMPT #1
+Usado para: Crear la estructura base del proyecto con arquitectura por capas y carpetas auxiliares.
+Prompt: "Crea la estructura de carpetas para un proyecto Java de inventario 
+con arquitectura por capas. Las carpetas dentro de src deben ser:
+com/inventario/entidades
+com/inventario/dao
+com/inventario/servicio
+com/inventario/presentacion
+
+También crea estas carpetas en la raíz:
+datos/ (con un archivo productos.txt vacío)
+docs/
+
+Y estos archivos vacíos en la raíz:
+README.md
+CHANGELOG.md
+prompts.txt
+
+No escribas código Java todavía, solo la estructura."
+Modificaciones manuales: Se pudo revisar manualmente que `README.md` existente no se sobrescribiera y confirmar visualmente la estructura creada.
+
+PROMPT #2
+Usado para: Generar la entidad `Producto`.
+Prompt: "Crea la clase Producto.java en el paquete com.inventario.entidades
+
+Atributos privados:
+- int id
+- String nombre
+- int cantidad
+- double precio
+
+Incluye:
+- Constructor con todos los parámetros
+- Constructor vacío
+- Getters y setters para cada atributo
+- Método toString() que retorne los datos separados por \" -|- \"
+
+No agregues lógica de negocio ni validaciones aquí."
+Modificaciones manuales: Se pudo ajustar manualmente el orden de métodos, la indentación o el separador del `toString()`.
+
+PROMPT #3
+Usado para: Crear la interfaz DAO para productos.
+Prompt: "Crea la interfaz IProductoDAO.java en el paquete com.inventario.dao
+
+Debe declarar estos métodos (sin implementar):
+- void guardar(Producto producto)
+- List<Producto> listarTodos()
+- Producto buscarPorId(int id)
+- void actualizar(Producto producto)
+- void eliminar(int id)
+
+Importa solo lo necesario. Usa la clase Producto del paquete 
+com.inventario.entidades"
+Modificaciones manuales: Se pudo corregir manualmente el orden de imports o el espaciado del archivo.
+
+PROMPT #4
+Usado para: Implementar la persistencia en archivo de texto.
+Prompt: "Crea la clase ProductoDAOArchivo.java en el paquete com.inventario.dao
+que implemente la interfaz IProductoDAO.
+
+Requisitos:
+- Lee y escribe en el archivo \"datos/productos.txt\"
+- Cada línea del archivo representa un producto con este formato:
+  id|nombre|cantidad|precio
+  Ejemplo: 1|Laptop|5|1200.00
+
+- Implementa los 5 métodos: guardar, listarTodos, buscarPorId, 
+  actualizar y eliminar
+
+- Para eliminar: reescribe el archivo sin la línea del producto eliminado
+- Para actualizar: reescribe el archivo reemplazando la línea del producto
+- Maneja excepciones IOException con try-catch, imprime el error en consola
+
+No uses base de datos, solo el archivo .txt"
+Modificaciones manuales: Se pudo cambiar manualmente el texto de los mensajes de error o el formato visual de algunos bloques `try-catch`.
+
+PROMPT #5
+Usado para: Crear la interfaz de servicio.
+Prompt: "Crea la interfaz IProductoServicio.java en el paquete com.inventario.servicio
+
+Declara estos métodos sin implementar:
+- void registrarProducto(Producto producto)
+- List<Producto> obtenerTodos()
+- Producto buscarPorId(int id)
+- void actualizarProducto(Producto producto)
+- void eliminarProducto(int id)
+
+Importa Producto de com.inventario.entidades y List de java.util"
+Modificaciones manuales: Se pudo ordenar manualmente los métodos o uniformar el estilo del archivo con el resto del proyecto.
+
+PROMPT #6
+Usado para: Implementar la capa de servicio con validaciones.
+Prompt: "Crea la clase ProductoServicio.java en el paquete com.inventario.servicio
+que implemente IProductoServicio.
+
+Requisitos:
+- Tiene un atributo privado de tipo IProductoDAO llamado dao
+- El constructor recibe un IProductoDAO y lo asigna al atributo
+- Implementa los 5 métodos delegando al dao
+
+Validaciones obligatorias en registrarProducto:
+- El nombre no puede ser null ni vacío → lanza IllegalArgumentException
+- La cantidad no puede ser negativa → lanza IllegalArgumentException  
+- El precio debe ser mayor a 0 → lanza IllegalArgumentException
+- El id no puede ya existir (usa buscarPorId para verificar) 
+  → lanza IllegalArgumentException con mensaje \"ID ya existe\"
+
+En los demás métodos no hace falta validación extra por ahora."
+Modificaciones manuales: Se pudo ajustar manualmente el texto de las excepciones o simplificar el orden de las validaciones.
+
+PROMPT #7
+Usado para: Crear el menú de consola de la capa de presentación.
+Prompt: "Crea la clase Menu.java en el paquete com.inventario.presentacion
+
+Requisitos:
+- Tiene un atributo privado IProductoServicio servicio y un Scanner
+- El constructor recibe un IProductoServicio
+- Método público void iniciar() que muestra un menú en bucle con estas opciones:
+  1. Registrar producto
+  2. Listar productos
+  3. Buscar producto por ID
+  4. Actualizar producto
+  5. Eliminar producto
+  0. Salir
+
+- Cada opción llama a un método privado separado:
+  registrarProducto(), listarProductos(), buscarProducto(), 
+  actualizarProducto(), eliminarProducto()
+
+- En registrarProducto: pide id, nombre, cantidad y precio al usuario
+- En listarProductos: imprime todos los productos en consola
+- En buscarProducto: pide un ID e imprime el producto o \"No encontrado\"
+- En actualizarProducto: pide el ID y los nuevos datos
+- En eliminarProducto: pide el ID, confirma con \"¿Está seguro? (s/n)\" 
+  y elimina si confirma
+
+- Captura IllegalArgumentException y muestra el mensaje de error
+- No importa ni usa nada del paquete dao directamente
+
+Debe de ser un menu moderno y sencillo de entender"
+Modificaciones manuales: Se pudo cambiar manualmente el texto de las opciones, los separadores visuales o la redacción de mensajes al usuario.
+
+PROMPT #8
+Usado para: Crear la clase principal de arranque.
+Prompt: "Crea la clase Main.java en el paquete com.inventario.presentacion
+
+Debe:
+1. Crear una instancia de ProductoDAOArchivo
+2. Crear una instancia de ProductoServicio pasándole el dao
+3. Crear una instancia de Menu pasándole el servicio
+4. Llamar a menu.iniciar()
+
+Solo estas 4 líneas de lógica dentro del main. 
+Nada más en esta clase."
+Modificaciones manuales: Se pudo revisar manualmente que `main` tuviera solo las instancias pedidas y sin lógica adicional.
+
+PROMPT #9
+Usado para: Documentar los cambios del proyecto en el historial.
+Prompt: "Escribe el archivo CHANGELOG.md para un proyecto de inventario en Java.
+Debe tener exactamente este formato y estos tres tags:
+
+v1.0 - Estructura inicial
+v1.1 - CRUD funcional  
+v1.2 - Validaciones y mejoras
+
+Para cada versión lista los cambios reales que se hicieron según 
+esta arquitectura: entidades, dao, servicio, presentacion con 
+persistencia en archivo .txt"
+Modificaciones manuales: Se pudo corregir manualmente la redacción de algunos puntos o reagrupar cambios entre versiones para que el historial quedara más claro.
