@@ -59,6 +59,12 @@ Sistema-Inventario-Basico/
 - Persistencia en archivos `.txt`
 - Git y GitHub
 
+## Versiones publicadas
+
+- `v1.0`: estructura inicial del proyecto
+- `v1.1`: CRUD funcional completo
+- `v1.2`: mejoras, validaciones y documentacion
+
 ## Funcionamiento
 
 Cada producto se guarda en una linea del archivo `datos/productos.txt` con este formato:
